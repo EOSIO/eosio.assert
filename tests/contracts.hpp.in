@@ -1,0 +1,10 @@
+#pragma once
+#include <eosio/testing/tester.hpp>
+
+namespace eosio { namespace testing {
+
+struct contracts {
+   static std::vector<uint8_t> eosio_assert_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../../eosio.assert/bin/eosio.assert/eosio.assert.wasm"); }
+   static std::vector<char>    eosio_assert_abi() { return read_abi("${CMAKE_BINARY_DIR}/../../eosio.assert/bin/eosio.assert/eosio.assert.abi"); }
+};
+}} //ns eosio::testing
