@@ -1,8 +1,67 @@
 {
-  "version": "eosio::abi/1.0",
-  "structs": [],
-  "actions": [],
-  "tables": [],
-  "ricardian_clauses": [],
-  "abi_extensions": []
+   "version": "eosio::abi/1.0",
+   "structs": [
+      {
+         "name": "contract_action",
+         "base": "",
+         "fields": [
+            {
+               "name": "contract",
+               "type": "name"
+            },
+            {
+               "name": "action",
+               "type": "name"
+            }
+         ]
+      },
+      {
+         "name": "manifest",
+         "base": "",
+         "fields": [
+            {
+               "name": "account",
+               "type": "name"
+            },
+            {
+               "name": "name",
+               "type": "string"
+            },
+            {
+               "name": "domain",
+               "type": "string"
+            },
+            {
+               "name": "icon",
+               "type": "checksum256"
+            },
+            {
+               "name": "description",
+               "type": "string"
+            },
+            {
+               "name": "extra.json",
+               "type": "string"
+            },
+            {
+               "name": "whitelist",
+               "type": "contract_action[]"
+            },
+            {
+               "name": "blacklist",
+               "type": "contract_action[]"
+            }
+         ]
+      }
+   ],
+   "actions": [
+      {
+         "name": "add.manifest",
+         "type": "manifest",
+         "ricardian_contract": ""
+      }
+   ],
+   "tables": [],
+   "ricardian_clauses": [],
+   "abi_extensions": []
 }
