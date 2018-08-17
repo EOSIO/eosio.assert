@@ -56,6 +56,15 @@ push_transaction {
   ]
 }
 transaction pushed
+table: eosio.assert eosio.assert manifests
+    add row:
+        {
+          "unique_id": 0,
+          "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4",
+          "account": "dapp1",
+          "whitelist": [],
+          "blacklist": []
+        }
 
 add.manifest: duplicate
 =========================

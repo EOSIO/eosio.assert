@@ -52,6 +52,32 @@
                "type": "contract_action[]"
             }
          ]
+      },
+      {
+         "name": "stored_manifest",
+         "base": "",
+         "fields": [
+            {
+               "name": "unique_id",
+               "type": "uint64"
+            },
+            {
+               "name": "id",
+               "type": "checksum256"
+            },
+            {
+               "name": "account",
+               "type": "name"
+            },
+            {
+               "name": "whitelist",
+               "type": "contract_action[]"
+            },
+            {
+               "name": "blacklist",
+               "type": "contract_action[]"
+            }
+         ]
       }
    ],
    "actions": [
