@@ -1,0 +1,87 @@
+
+add.manifest: missing authority
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "add.manifest",
+      "authorization": [{
+          "actor": "dapp2",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "tables": [],
+        "ricardian_clauses": [],
+        "abi_extensions": [],
+        "account": "dapp1",
+        "name": "distributed app 1",
+        "domain": "https://nowhere",
+        "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+        "description": "Something to try",
+        "extra.json": "",
+        "whitelist": [],
+        "blacklist": []
+      }
+    }
+  ]
+}
+Exception: missing authority of dapp1
+
+add.manifest
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "add.manifest",
+      "authorization": [{
+          "actor": "dapp1",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "tables": [],
+        "ricardian_clauses": [],
+        "abi_extensions": [],
+        "account": "dapp1",
+        "name": "distributed app 1",
+        "domain": "https://nowhere",
+        "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+        "description": "Something to try",
+        "extra.json": "",
+        "whitelist": [],
+        "blacklist": []
+      }
+    }
+  ]
+}
+transaction pushed
+
+add.manifest: duplicate
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "add.manifest",
+      "authorization": [{
+          "actor": "dapp1",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "tables": [],
+        "ricardian_clauses": [],
+        "abi_extensions": [],
+        "account": "dapp1",
+        "name": "distributed app 1",
+        "domain": "https://nowhere",
+        "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+        "description": "Something to try",
+        "extra.json": "",
+        "whitelist": [],
+        "blacklist": []
+      }
+    }
+  ]
+}
+Exception: assertion failure with message: manifest already present
