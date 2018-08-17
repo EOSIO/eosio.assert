@@ -154,6 +154,7 @@ BOOST_AUTO_TEST_SUITE(eosio_assert)
 BOOST_AUTO_TEST_CASE(bootstrap) try {
    assert_tester        t{"bootstrap"};
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "chain_params"};
    t.create_account("dapp1"_n);
    t.create_account("dapp2"_n);
 
@@ -206,6 +207,7 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
          },
       }]
    })");
+   t.diff_table(chain_params);
    t.diff_table(manifests);
 
    t.heading("add.manifest: duplicate");
@@ -233,6 +235,49 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
          },
       }]
    })");
+
+   t.heading("add.manifest: white, black");
+   t.produce_block();
+   t.push_transaction("dapp1"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "add.manifest",
+         "authorization": [{
+            "actor":             "dapp1",
+            "permission":        "active",
+         }],
+         "data": {
+            "tables":            [],
+            "ricardian_clauses": [],
+            "abi_extensions":    [],
+            "account":           "dapp1",
+            "name":              "distributed app 1",
+            "domain":            "https://nowhere",
+            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "description":       "Something to try",
+            "extra.json":        "",
+            "whitelist":         [{
+               "contract":       "contract.2",
+               "action":         ""
+            }, {
+               "contract":       "contract.1",
+               "action":         "just.this"
+            }, {
+               "contract":       "contract.3",
+               "action":         ""
+            }],
+            "blacklist":         [{
+               "contract":       "contract.3",
+               "action":         "bad"
+            }, {
+               "contract":       "contract.2",
+               "action":         "very.bad"
+            }]
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
 
    t.check_file();
 }

@@ -2,6 +2,24 @@
    "version": "eosio::abi/1.0",
    "structs": [
       {
+         "name": "chain_params",
+         "base": "",
+         "fields": [
+            {
+               "name": "chain_name",
+               "type": "string"
+            },
+            {
+               "name": "icon",
+               "type": "checksum256"
+            },
+            {
+               "name": "next_unique_id",
+               "type": "uint64"
+            }
+         ]
+      },
+      {
          "name": "contract_action",
          "base": "",
          "fields": [
