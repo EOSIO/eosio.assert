@@ -1,4 +1,4 @@
-add_executable(eosio.assert.wasm 
+add_executable(eosio.assert.wasm
    ${CMAKE_CURRENT_SOURCE_DIR}/src/eosio.assert.cpp
    )
 
@@ -10,6 +10,6 @@ target_include_directories(eosio.assert.wasm
 
 set_target_properties(eosio.assert.wasm
    PROPERTIES
-   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/eosio.assert")
+   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/abi/eosio.assert.abi" "${CMAKE_CURRENT_SOURCE_DIR}/bin/eosio.assert" COPYONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/abi/eosio.assert.abi" "${CMAKE_CURRENT_BINARY_DIR}" COPYONLY)
