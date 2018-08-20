@@ -149,10 +149,10 @@ class assert_tester : public TESTER {
    abi_serializer        abi_ser;
 };
 
-BOOST_AUTO_TEST_SUITE(eosio_assert)
+BOOST_AUTO_TEST_SUITE(assert)
 
-BOOST_AUTO_TEST_CASE(bootstrap) try {
-   assert_tester        t{"bootstrap"};
+BOOST_AUTO_TEST_CASE(add_manifest) try {
+   assert_tester        t{"add_manifest"};
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
    assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "chain_params"};
    t.create_account("dapp1"_n);
@@ -168,9 +168,6 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
             "permission":        "active",
          }],
          "data": {
-            "tables":            [],
-            "ricardian_clauses": [],
-            "abi_extensions":    [],
             "account":           "dapp1",
             "name":              "distributed app 1",
             "domain":            "https://nowhere",
@@ -193,9 +190,6 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
             "permission":        "active",
          }],
          "data": {
-            "tables":            [],
-            "ricardian_clauses": [],
-            "abi_extensions":    [],
             "account":           "dapp1",
             "name":              "distributed app 1",
             "domain":            "https://nowhere",
@@ -221,9 +215,6 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
             "permission":        "active",
          }],
          "data": {
-            "tables":            [],
-            "ricardian_clauses": [],
-            "abi_extensions":    [],
             "account":           "dapp1",
             "name":              "distributed app 1",
             "domain":            "https://nowhere",
@@ -247,9 +238,6 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
             "permission":        "active",
          }],
          "data": {
-            "tables":            [],
-            "ricardian_clauses": [],
-            "abi_extensions":    [],
             "account":           "dapp1",
             "name":              "distributed app 1",
             "domain":            "https://nowhere",
@@ -279,8 +267,76 @@ BOOST_AUTO_TEST_CASE(bootstrap) try {
    t.diff_table(chain_params);
    t.diff_table(manifests);
 
+   t.heading("del.manifest: not found");
+   t.push_transaction("dapp2"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "del.manifest",
+         "authorization": [{
+            "actor":             "dapp2",
+            "permission":        "active",
+         }],
+         "data": {
+            "id":                "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("del.manifest: wrong auth");
+   t.push_transaction("dapp2"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "del.manifest",
+         "authorization": [{
+            "actor":             "dapp2",
+            "permission":        "active",
+         }],
+         "data": {
+            "id":                "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7",
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("del.manifest");
+   t.push_transaction("dapp1"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "del.manifest",
+         "authorization": [{
+            "actor":             "dapp1",
+            "permission":        "active",
+         }],
+         "data": {
+            "id":                "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7",
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("del.manifest");
+   t.push_transaction("dapp1"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "del.manifest",
+         "authorization": [{
+            "actor":             "dapp1",
+            "permission":        "active",
+         }],
+         "data": {
+            "id":                "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4",
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
    t.check_file();
 }
-FC_LOG_AND_RETHROW()
+FC_LOG_AND_RETHROW() // add_manifest
 
 BOOST_AUTO_TEST_SUITE_END()

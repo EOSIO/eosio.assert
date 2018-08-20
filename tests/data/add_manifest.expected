@@ -11,9 +11,6 @@ push_transaction {
         }
       ],
       "data": {
-        "tables": [],
-        "ricardian_clauses": [],
-        "abi_extensions": [],
         "account": "dapp1",
         "name": "distributed app 1",
         "domain": "https://nowhere",
@@ -40,9 +37,6 @@ push_transaction {
         }
       ],
       "data": {
-        "tables": [],
-        "ricardian_clauses": [],
-        "abi_extensions": [],
         "account": "dapp1",
         "name": "distributed app 1",
         "domain": "https://nowhere",
@@ -85,9 +79,6 @@ push_transaction {
         }
       ],
       "data": {
-        "tables": [],
-        "ricardian_clauses": [],
-        "abi_extensions": [],
         "account": "dapp1",
         "name": "distributed app 1",
         "domain": "https://nowhere",
@@ -114,9 +105,6 @@ push_transaction {
         }
       ],
       "data": {
-        "tables": [],
-        "ricardian_clauses": [],
-        "abi_extensions": [],
         "account": "dapp1",
         "name": "distributed app 1",
         "domain": "https://nowhere",
@@ -179,4 +167,121 @@ table: eosio.assert eosio.assert manifests
               "action": "bad"
             }
           ]
+        }
+
+del.manifest: not found
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "del.manifest",
+      "authorization": [{
+          "actor": "dapp2",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "id": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
+      }
+    }
+  ]
+}
+Exception: assertion failure with message: manifest not found
+table: eosio.assert eosio.assert chain.params
+table: eosio.assert eosio.assert manifests
+
+del.manifest: wrong auth
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "del.manifest",
+      "authorization": [{
+          "actor": "dapp2",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7"
+      }
+    }
+  ]
+}
+Exception: missing authority of dapp1
+table: eosio.assert eosio.assert chain.params
+table: eosio.assert eosio.assert manifests
+
+del.manifest
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "del.manifest",
+      "authorization": [{
+          "actor": "dapp1",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7"
+      }
+    }
+  ]
+}
+transaction pushed
+table: eosio.assert eosio.assert chain.params
+table: eosio.assert eosio.assert manifests
+    del row:
+        {
+          "unique_id": 2,
+          "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7",
+          "account": "dapp1",
+          "whitelist": [{
+              "contract": "contract.1",
+              "action": "just.this"
+            },{
+              "contract": "contract.2",
+              "action": ""
+            },{
+              "contract": "contract.3",
+              "action": ""
+            }
+          ],
+          "blacklist": [{
+              "contract": "contract.2",
+              "action": "very.bad"
+            },{
+              "contract": "contract.3",
+              "action": "bad"
+            }
+          ]
+        }
+
+del.manifest
+=========================
+push_transaction {
+  "actions": [{
+      "account": "eosio.assert",
+      "name": "del.manifest",
+      "authorization": [{
+          "actor": "dapp1",
+          "permission": "active"
+        }
+      ],
+      "data": {
+        "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4"
+      }
+    }
+  ]
+}
+transaction pushed
+table: eosio.assert eosio.assert chain.params
+table: eosio.assert eosio.assert manifests
+    del row:
+        {
+          "unique_id": 1,
+          "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4",
+          "account": "dapp1",
+          "whitelist": [],
+          "blacklist": []
         }
