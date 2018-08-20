@@ -19,17 +19,21 @@ checksum256 get_hash(const bytes& data) {
 }
 
 struct asserter {
-   name               _self;
-   manifests          manifest_table{_self, _self};
-   manifests_id_index manifest_id = manifest_table.get_index<"id"_n>();
-   chains             chain_table{_self, _self};
-   chain_params       chain = chain_table.get_or_default();
+   name                _self;
+   manifests           manifest_table{_self, _self};
+   manifests_id_index  manifest_id_idx = manifest_table.get_index<"id"_n>();
+   chains              chain_table{_self, _self};
+   stored_chain_params chain = chain_table.get_or_default();
 
-   void setchain(checksum256 chain_id, const string& chain_name, checksum256 icon) {
+   void setchain() {
       require_auth("eosio"_n);
-      chain.chain_id   = chain_id;
-      chain.chain_name = chain_name;
-      chain.icon       = icon;
+      auto data        = get_action_bytes();
+      auto hash        = get_hash(data);
+      auto unpacked    = unpack<chain_params>(data);
+      chain.chain_id   = unpacked.chain_id;
+      chain.chain_name = unpacked.chain_name;
+      chain.icon       = unpacked.icon;
+      chain.hash       = hash;
       chain_table.set(chain, _self);
    }
 
@@ -45,17 +49,23 @@ struct asserter {
           .blacklist = {unpacked.blacklist.begin(), unpacked.blacklist.end()},
       };
       require_auth(stored.account);
-      auto it = manifest_id.find(stored.id_key());
-      eosio_assert(it == manifest_id.end(), "manifest already present");
+      auto it = manifest_id_idx.find(stored.id_key());
+      eosio_assert(it == manifest_id_idx.end(), "manifest already present");
       manifest_table.emplace(stored.account, [&](auto& x) { x = stored; });
       chain_table.set(chain, _self);
    }
 
    void del_manifest(checksum256 id) {
-      auto it = manifest_id.find(to_key256(id));
-      eosio_assert(it != manifest_id.end(), "manifest not found");
+      auto it = manifest_id_idx.find(to_key256(id));
+      eosio_assert(it != manifest_id_idx.end(), "manifest not found");
       require_auth(it->account);
-      manifest_id.erase(it);
+      manifest_id_idx.erase(it);
+   }
+
+   void require(const checksum256& chain_params_hash, const checksum256& manifest_id) {
+      eosio_assert(chain_params_hash == chain.hash, "Incorrect chain");
+      auto it = manifest_id_idx.find(to_key256(manifest_id));
+      eosio_assert(it != manifest_id_idx.end(), "manifest not found");
    }
 
    void apply(name contract, name act) {
@@ -63,11 +73,13 @@ struct asserter {
          auto& thiscontract = *this;
 
          switch (act) {
+         case "setchain"_n:
+            return setchain();
          case "add.manifest"_n:
             return add_manifest();
          };
 
-         switch (act) { EOSIO_API(asserter, (setchain)(del_manifest)) };
+         switch (act) { EOSIO_API(asserter, (del_manifest)(require)) };
       }
    }
 };

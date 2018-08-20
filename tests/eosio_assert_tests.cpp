@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_SUITE(assert)
 BOOST_AUTO_TEST_CASE(setchain) try {
    assert_tester        t{"setchain"};
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
-   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "chain_params"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "stored_chain_params"};
    t.create_account("someone"_n);
 
    t.heading("setchain: missing authority");
@@ -218,7 +218,7 @@ FC_LOG_AND_RETHROW() // setchain
 BOOST_AUTO_TEST_CASE(add_manifest) try {
    assert_tester        t{"add_manifest"};
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
-   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "chain_params"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "stored_chain_params"};
    t.create_account("dapp1"_n);
    t.create_account("dapp2"_n);
 
@@ -402,5 +402,106 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
    t.check_file();
 }
 FC_LOG_AND_RETHROW() // add_manifest
+
+BOOST_AUTO_TEST_CASE(require) try {
+   assert_tester        t{"require"};
+   assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "stored_chain_params"};
+   t.create_account("dapp1"_n);
+   t.create_account("user"_n);
+
+   t.heading("setchain");
+   t.push_transaction("eosio"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "setchain",
+         "authorization": [{
+            "actor":             "eosio",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_id":          "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "chain_name":        "My Mega Sidechain",
+            "icon":              "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+
+   t.heading("add.manifest: empty");
+   t.push_transaction("dapp1"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "add.manifest",
+         "authorization": [{
+            "actor":             "dapp1",
+            "permission":        "active",
+         }],
+         "data": {
+            "account":           "dapp1",
+            "name":              "distributed app 1",
+            "domain":            "https://nowhere",
+            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "description":       "Something to try",
+            "extra.json":        "",
+            "whitelist":         [],
+            "blacklist":         []
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("require: wrong chain");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+
+   t.heading("require: unknown manifest");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+
+   t.heading("require");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4"
+         },
+      }]
+   })");
+
+   t.check_file();
+}
+FC_LOG_AND_RETHROW() // require
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -40,10 +40,17 @@ struct chain_params {
    checksum256 chain_id;
    string      chain_name;
    checksum256 icon;
+};
+
+struct stored_chain_params {
+   checksum256 chain_id;
+   string      chain_name;
+   checksum256 icon;
+   checksum256 hash;
    uint64_t    next_unique_id = 1;
 };
 
-using chains = singleton<"chain.params"_n, chain_params>;
+using chains = singleton<"chain.params"_n, stored_chain_params>;
 
 struct contract_action {
    name contract;

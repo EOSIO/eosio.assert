@@ -2,7 +2,7 @@
    "version": "eosio::abi/1.0",
    "structs": [
       {
-         "name": "setchain",
+         "name": "chain_params",
          "base": "",
          "fields": [
             {
@@ -20,7 +20,7 @@
          ]
       },
       {
-         "name": "chain_params",
+         "name": "stored_chain_params",
          "base": "",
          "fields": [
             {
@@ -33,6 +33,10 @@
             },
             {
                "name": "icon",
+               "type": "checksum256"
+            },
+            {
+               "name": "hash",
                "type": "checksum256"
             },
             {
@@ -128,12 +132,26 @@
                "type": "checksum256"
             }
          ]
+      },
+      {
+         "name": "require",
+         "base": "",
+         "fields": [
+            {
+               "name": "chain_params_hash",
+               "type": "checksum256"
+            },
+            {
+               "name": "manifest_id",
+               "type": "checksum256"
+            }
+         ]
       }
    ],
    "actions": [
       {
          "name": "setchain",
-         "type": "setchain",
+         "type": "chain_params",
          "ricardian_contract": ""
       },
       {
@@ -144,6 +162,11 @@
       {
          "name": "del.manifest",
          "type": "del.manifest",
+         "ricardian_contract": ""
+      },
+      {
+         "name": "require",
+         "type": "require",
          "ricardian_contract": ""
       }
    ],

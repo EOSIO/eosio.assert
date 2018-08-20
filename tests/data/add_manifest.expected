@@ -56,6 +56,7 @@ table: eosio.assert eosio.assert chain.params
           "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
           "chain_name": "",
           "icon": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "0000000000000000000000000000000000000000000000000000000000000000",
           "next_unique_id": 2
         }
 table: eosio.assert eosio.assert manifests
@@ -142,6 +143,7 @@ table: eosio.assert eosio.assert chain.params
           "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
           "chain_name": "",
           "icon": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "0000000000000000000000000000000000000000000000000000000000000000",
           "next_unique_id": 3
         }
 table: eosio.assert eosio.assert manifests
