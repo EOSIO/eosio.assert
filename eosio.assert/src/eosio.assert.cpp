@@ -25,6 +25,14 @@ struct asserter {
    chains             chain_table{_self, _self};
    chain_params       chain = chain_table.get_or_default();
 
+   void setchain(checksum256 chain_id, const string& chain_name, checksum256 icon) {
+      require_auth("eosio"_n);
+      chain.chain_id   = chain_id;
+      chain.chain_name = chain_name;
+      chain.icon       = icon;
+      chain_table.set(chain, _self);
+   }
+
    void add_manifest() {
       auto data     = get_action_bytes();
       auto hash     = get_hash(data);
@@ -59,7 +67,7 @@ struct asserter {
             return add_manifest();
          };
 
-         switch (act) { EOSIO_API(asserter, (del_manifest)) };
+         switch (act) { EOSIO_API(asserter, (setchain)(del_manifest)) };
       }
    }
 };

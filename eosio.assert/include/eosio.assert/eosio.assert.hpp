@@ -37,6 +37,7 @@ inline key256 to_key256(const checksum256& cs) {
 }
 
 struct chain_params {
+   checksum256 chain_id;
    string      chain_name;
    checksum256 icon;
    uint64_t    next_unique_id = 1;

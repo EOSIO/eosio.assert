@@ -53,6 +53,7 @@ transaction pushed
 table: eosio.assert eosio.assert chain.params
     add row:
         {
+          "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
           "chain_name": "",
           "icon": "0000000000000000000000000000000000000000000000000000000000000000",
           "next_unique_id": 2
@@ -138,6 +139,7 @@ transaction pushed
 table: eosio.assert eosio.assert chain.params
     change row:
         {
+          "chain_id": "0000000000000000000000000000000000000000000000000000000000000000",
           "chain_name": "",
           "icon": "0000000000000000000000000000000000000000000000000000000000000000",
           "next_unique_id": 3

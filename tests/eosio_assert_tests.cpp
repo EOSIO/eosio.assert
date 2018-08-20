@@ -151,6 +151,70 @@ class assert_tester : public TESTER {
 
 BOOST_AUTO_TEST_SUITE(assert)
 
+BOOST_AUTO_TEST_CASE(setchain) try {
+   assert_tester        t{"setchain"};
+   assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "chain_params"};
+   t.create_account("someone"_n);
+
+   t.heading("setchain: missing authority");
+   t.push_transaction("someone"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "setchain",
+         "authorization": [{
+            "actor":             "someone",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_id":          "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "chain_name":        "My Mega Sidechain",
+            "icon":              "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+
+   t.heading("setchain");
+   t.push_transaction("eosio"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "setchain",
+         "authorization": [{
+            "actor":             "eosio",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_id":          "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "chain_name":        "My Mega Sidechain",
+            "icon":              "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+
+   t.heading("setchain: update");
+   t.push_transaction("eosio"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "setchain",
+         "authorization": [{
+            "actor":             "eosio",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_id":          "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "chain_name":        "Renamed",
+            "icon":              "123412341234123412341234123412341234123412341234123412341234FEED"
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+
+   t.check_file();
+}
+FC_LOG_AND_RETHROW() // setchain
+
 BOOST_AUTO_TEST_CASE(add_manifest) try {
    assert_tester        t{"add_manifest"};
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
