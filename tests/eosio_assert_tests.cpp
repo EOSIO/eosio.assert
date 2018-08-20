@@ -428,7 +428,7 @@ BOOST_AUTO_TEST_CASE(require) try {
    })");
    t.diff_table(chain_params);
 
-   t.heading("add.manifest: empty");
+   t.heading("add.manifest");
    t.push_transaction("dapp1"_n, R"({
       "actions": [{
          "account":              "eosio.assert",
@@ -444,8 +444,20 @@ BOOST_AUTO_TEST_CASE(require) try {
             "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
             "description":       "Something to try",
             "extra.json":        "",
-            "whitelist":         [],
-            "blacklist":         []
+            "whitelist":         [{
+               "contract":       "contract.2",
+               "action":         ""
+            }, {
+               "contract":       "contract.1",
+               "action":         "just.this"
+            }, {
+               "contract":       "",
+               "action":         "transfer"
+            }],
+            "blacklist":         [{
+               "contract":       "bad.token",
+               "action":         "transfer"
+            }]
          },
       }]
    })");
@@ -463,7 +475,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
+            "actions":           []
          },
       }]
    })");
@@ -479,7 +492,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+            "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
+            "actions":           []
          },
       }]
    })");
@@ -495,7 +509,108 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4"
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           []
+         },
+      }]
+   })");
+
+   t.heading("require: simple match whitelist");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           [{
+               "contract":       "contract.1",
+               "action":         "just.this"
+            }]
+         },
+      }]
+   })");
+
+   t.heading("require: whitelist wild action");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           [{
+               "contract":       "contract.2",
+               "action":         "foo"
+            }]
+         },
+      }]
+   })");
+
+   t.heading("require: whitelist wild contract");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           [{
+               "contract":       "unknown",
+               "action":         "transfer"
+            }]
+         },
+      }]
+   })");
+
+   t.heading("require: whitelist doesn't match");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           [{
+               "contract":       "unk.account",
+               "action":         "unk.action"
+            }]
+         },
+      }]
+   })");
+
+   t.heading("require: in blacklist");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+            "actions":           [{
+               "contract":       "bad.token",
+               "action":         "transfer"
+            }]
          },
       }]
    })");

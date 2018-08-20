@@ -62,10 +62,28 @@ struct asserter {
       manifest_id_idx.erase(it);
    }
 
-   void require(const checksum256& chain_params_hash, const checksum256& manifest_id) {
+   bool in(contract_action action, const flat_set<contract_action>& actions) {
+      return actions.find(action) != actions.end() || //
+             actions.find({action.contract, name{0}}) != actions.end() ||
+             actions.find({name{0}, action.action}) != actions.end() ||
+             actions.find({name{0}, name{0}}) != actions.end();
+   }
+
+   void require(const checksum256& chain_params_hash, const checksum256& manifest_id,
+                const vector<contract_action>& actions) {
       eosio_assert(chain_params_hash == chain.hash, "Incorrect chain");
       auto it = manifest_id_idx.find(to_key256(manifest_id));
       eosio_assert(it != manifest_id_idx.end(), "manifest not found");
+      for (auto& action : actions) {
+         if (!in(action, it->whitelist))
+            eosio_assert(
+                false,
+                (action.action.to_string() + "@" + action.contract.to_string() + " is not in whitelist").c_str());
+         if (in(action, it->blacklist))
+            eosio_assert(
+                false,
+                (action.action.to_string() + "@" + action.contract.to_string() + " is in blacklist").c_str());
+      }
    }
 
    void apply(name contract, name act) {
