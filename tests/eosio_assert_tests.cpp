@@ -408,6 +408,7 @@ BOOST_AUTO_TEST_CASE(require) try {
    assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
    assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "stored_chain_params"};
    t.create_account("dapp1"_n);
+   t.create_account("wild"_n);
    t.create_account("user"_n);
 
    t.heading("setchain");
@@ -458,6 +459,33 @@ BOOST_AUTO_TEST_CASE(require) try {
                "contract":       "bad.token",
                "action":         "transfer"
             }]
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("add.manifest");
+   t.push_transaction("wild"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "add.manifest",
+         "authorization": [{
+            "actor":             "wild",
+            "permission":        "active",
+         }],
+         "data": {
+            "account":           "wild",
+            "name":              "distributed app 1",
+            "domain":            "https://nowhere",
+            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "description":       "Something to try",
+            "extra.json":        "",
+            "whitelist":         [{
+               "contract":       "",
+               "action":         ""
+            }],
+            "blacklist":         []
          },
       }]
    })");
@@ -570,6 +598,26 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "unknown",
                "action":         "transfer"
+            }]
+         },
+      }]
+   })");
+
+   t.heading("require: whitelist full wild");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "unk.account",
+               "action":         "unk.action"
             }]
          },
       }]
