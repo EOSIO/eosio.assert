@@ -45,7 +45,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [{
             "contract": "contract.2",
@@ -81,8 +80,9 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 1,
-          "id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+          "id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
           "account": "dapp1",
+          "domain": "https://nowhere",
           "whitelist": [{
               "contract": "",
               "action": "transfer"
@@ -117,7 +117,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [{
             "contract": "",
@@ -143,8 +142,9 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 2,
-          "id": "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+          "id": "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
           "account": "wild",
+          "domain": "https://nowhere",
           "whitelist": [{
               "contract": "",
               "action": ""
@@ -210,7 +210,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [],
         "abi_hashes": []
       }
@@ -232,7 +232,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [{
             "contract": "contract.1",
             "action": "just.this"
@@ -260,7 +260,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [{
             "contract": "contract.2",
             "action": "foo"
@@ -288,7 +288,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [{
             "contract": "unknown",
             "action": "transfer"
@@ -316,7 +316,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+        "manifest_id": "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
         "actions": [{
             "contract": "unk.account",
             "action": "unk.action"
@@ -344,7 +344,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [{
             "contract": "unk.account",
             "action": "unk.action"
@@ -372,7 +372,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
+        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
         "actions": [{
             "contract": "bad.token",
             "action": "transfer"

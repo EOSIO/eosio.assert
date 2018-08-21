@@ -15,7 +15,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [],
         "blacklist": []
@@ -41,7 +40,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [],
         "blacklist": []
@@ -63,8 +61,9 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 1,
-          "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4",
+          "id": "1edd77ab2fed6568fc61da5b30c9f4654a5a9822907989a10948d4ad2d6524fe",
           "account": "dapp1",
+          "domain": "https://nowhere",
           "whitelist": [],
           "blacklist": []
         }
@@ -85,7 +84,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [],
         "blacklist": []
@@ -111,7 +109,6 @@ push_transaction {
         "name": "distributed app 1",
         "domain": "https://nowhere",
         "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "description": "Something to try",
         "extra.json": "",
         "whitelist": [{
             "contract": "contract.2",
@@ -150,8 +147,9 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 2,
-          "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7",
+          "id": "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a",
           "account": "dapp1",
+          "domain": "https://nowhere",
           "whitelist": [{
               "contract": "contract.1",
               "action": "just.this"
@@ -206,7 +204,7 @@ push_transaction {
         }
       ],
       "data": {
-        "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7"
+        "id": "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a"
       }
     }
   ]
@@ -227,7 +225,7 @@ push_transaction {
         }
       ],
       "data": {
-        "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7"
+        "id": "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a"
       }
     }
   ]
@@ -238,8 +236,9 @@ table: eosio.assert eosio.assert manifests
     del row:
         {
           "unique_id": 2,
-          "id": "70af40475e12994f02be15ea76f8656175f54facc660d5dc3269fad7d31f3eb7",
+          "id": "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a",
           "account": "dapp1",
+          "domain": "https://nowhere",
           "whitelist": [{
               "contract": "contract.1",
               "action": "just.this"
@@ -273,7 +272,7 @@ push_transaction {
         }
       ],
       "data": {
-        "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4"
+        "id": "1edd77ab2fed6568fc61da5b30c9f4654a5a9822907989a10948d4ad2d6524fe"
       }
     }
   ]
@@ -284,8 +283,9 @@ table: eosio.assert eosio.assert manifests
     del row:
         {
           "unique_id": 1,
-          "id": "a3ab27bb8dbb871615707290bae2dbf34b8b49bc0bf5134d1dfd4a536cac8bd4",
+          "id": "1edd77ab2fed6568fc61da5b30c9f4654a5a9822907989a10948d4ad2d6524fe",
           "account": "dapp1",
+          "domain": "https://nowhere",
           "whitelist": [],
           "blacklist": []
         }

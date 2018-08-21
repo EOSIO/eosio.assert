@@ -45,6 +45,7 @@ struct asserter {
           .unique_id = chain.next_unique_id++,
           .id        = hash,
           .account   = unpacked.account,
+          .domain    = unpacked.domain,
           .whitelist = {unpacked.whitelist.begin(), unpacked.whitelist.end()},
           .blacklist = {unpacked.blacklist.begin(), unpacked.blacklist.end()},
       };

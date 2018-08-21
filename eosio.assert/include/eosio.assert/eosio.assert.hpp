@@ -64,9 +64,8 @@ inline bool operator<(const contract_action& a, const contract_action& b) {
 struct manifest {
    name                    account;
    skip<std::string>       _name;
-   skip<std::string>       domain;
+   std::string             domain;
    skip<checksum256>       icon;
-   skip<std::string>       description;
    skip<std::string>       extra_json;
    vector<contract_action> whitelist;
    vector<contract_action> blacklist;
@@ -76,6 +75,7 @@ struct stored_manifest {
    uint64_t                  unique_id = 0;
    checksum256               id;
    name                      account;
+   std::string               domain;
    flat_set<contract_action> whitelist;
    flat_set<contract_action> blacklist;
 

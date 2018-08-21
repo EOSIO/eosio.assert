@@ -80,10 +80,6 @@
                "type": "checksum256"
             },
             {
-               "name": "description",
-               "type": "string"
-            },
-            {
                "name": "extra.json",
                "type": "string"
             },
@@ -112,6 +108,10 @@
             {
                "name": "account",
                "type": "name"
+            },
+            {
+               "name": "domain",
+               "type": "string"
             },
             {
                "name": "whitelist",
