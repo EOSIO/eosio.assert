@@ -167,12 +167,13 @@ push_transaction {
       "data": {
         "chain_params_hash": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
         "manifest_id": "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
-        "actions": []
+        "actions": [],
+        "abi_hashes": []
       }
     }
   ]
 }
-Exception: assertion failure with message: Incorrect chain
+Exception: assertion failure with message: chain hash is a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c but user expected 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 
 require: unknown manifest
 =========================
@@ -188,7 +189,8 @@ push_transaction {
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
         "manifest_id": "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
-        "actions": []
+        "actions": [],
+        "abi_hashes": []
       }
     }
   ]
@@ -209,7 +211,8 @@ push_transaction {
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
         "manifest_id": "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
-        "actions": []
+        "actions": [],
+        "abi_hashes": []
       }
     }
   ]
@@ -234,6 +237,9 @@ push_transaction {
             "contract": "contract.1",
             "action": "just.this"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }
@@ -259,6 +265,9 @@ push_transaction {
             "contract": "contract.2",
             "action": "foo"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }
@@ -284,6 +293,9 @@ push_transaction {
             "contract": "unknown",
             "action": "transfer"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }
@@ -309,6 +321,9 @@ push_transaction {
             "contract": "unk.account",
             "action": "unk.action"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }
@@ -334,6 +349,9 @@ push_transaction {
             "contract": "unk.account",
             "action": "unk.action"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }
@@ -359,6 +377,9 @@ push_transaction {
             "contract": "bad.token",
             "action": "transfer"
           }
+        ],
+        "abi_hashes": [
+          "0000000000000000000000000000000000000000000000000000000000000000"
         ]
       }
     }

@@ -69,20 +69,46 @@ struct asserter {
              actions.find({name{0}, name{0}}) != actions.end();
    }
 
+   static std::string hash_to_str(const checksum256& hash) {
+      static const char table[] = "0123456789abcdef";
+      std::string       result;
+      for (uint8_t byte : hash.hash) {
+         result += table[byte >> 4];
+         result += table[byte & 0xf];
+      }
+      return result;
+   }
+
    void require(const checksum256& chain_params_hash, const checksum256& manifest_id,
-                const vector<contract_action>& actions) {
-      eosio_assert(chain_params_hash == chain.hash, "Incorrect chain");
+                const vector<contract_action>& actions, const vector<checksum256>& abi_hashes) {
+      if (!(chain_params_hash == chain.hash))
+         eosio_assert(false, ("chain hash is " + hash_to_str(chain.hash) + " but user expected " +
+                              hash_to_str(chain_params_hash))
+                                 .c_str());
       auto it = manifest_id_idx.find(to_key256(manifest_id));
       eosio_assert(it != manifest_id_idx.end(), "manifest not found");
+      flat_set<name> contracts;
       for (auto& action : actions) {
+         contracts.insert(action.contract);
          if (!in(action, it->whitelist))
             eosio_assert(
                 false,
                 (action.action.to_string() + "@" + action.contract.to_string() + " is not in whitelist").c_str());
          if (in(action, it->blacklist))
-            eosio_assert(
-                false,
-                (action.action.to_string() + "@" + action.contract.to_string() + " is in blacklist").c_str());
+            eosio_assert(false,
+                         (action.action.to_string() + "@" + action.contract.to_string() + " is in blacklist").c_str());
+      }
+      abi_hash_table table{"eosio"_n, "eosio"_n};
+      eosio_assert(abi_hashes.size() == contracts.size(), "incorrect number of abi hashes");
+      for (size_t i = 0; i < abi_hashes.size(); ++i) {
+         auto        it = table.find(*contracts.nth(i));
+         checksum256 hash{};
+         if (it != table.end())
+            hash = it->hash;
+         if (!(abi_hashes[i] == hash))
+            eosio_assert(false, (contracts.nth(i)->to_string() + " abi hash is " + hash_to_str(hash) +
+                                 " but user expected " + hash_to_str(abi_hashes[i]))
+                                    .c_str());
       }
    }
 

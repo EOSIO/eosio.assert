@@ -6,5 +6,12 @@ namespace eosio { namespace testing {
 struct contracts {
    static std::vector<uint8_t> eosio_assert_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../eosio.assert/eosio.assert.wasm"); }
    static std::vector<char>    eosio_assert_abi() { return read_abi("${CMAKE_BINARY_DIR}/../eosio.assert/eosio.assert.abi"); }
+
+   static std::vector<uint8_t> test_bios_wasm() { return read_wasm("${CMAKE_SOURCE_DIR}/test_contracts/eosio.bios.wasm"); }
+   static std::vector<char>    test_bios_abi() { return read_abi("${CMAKE_SOURCE_DIR}/test_contracts/eosio.bios.abi"); }
+
+   static std::vector<char>    test_foo_abi() { return read_abi("${CMAKE_SOURCE_DIR}/test_contracts/foo.abi"); }
+   static std::vector<char>    test_bar_abi() { return read_abi("${CMAKE_SOURCE_DIR}/test_contracts/bar.abi"); }
+   static std::vector<char>    test_baz_abi() { return read_abi("${CMAKE_SOURCE_DIR}/test_contracts/baz.abi"); }
 };
 }} //ns eosio::testing

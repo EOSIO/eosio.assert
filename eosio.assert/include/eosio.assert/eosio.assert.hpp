@@ -88,4 +88,13 @@ using manifests =
                        indexed_by<"id"_n, eosio::const_mem_fun<stored_manifest, key256, &stored_manifest::id_key>>>;
 using manifests_id_index = decltype(std::declval<manifests>().get_index<"id"_n>());
 
+struct abi_hash {
+   name        owner;
+   checksum256 hash;
+
+   uint64_t primary_key() const { return owner; }
+};
+
+using abi_hash_table = eosio::multi_index<"abihash"_n, abi_hash>;
+
 } // namespace assert_contract

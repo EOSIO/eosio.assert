@@ -68,8 +68,13 @@ class assert_tester : public TESTER {
        : TESTER(), test_name{test_name}, outfile{DATA_DIR + test_name + ".actual"}, abi{contracts::eosio_assert_abi()},
          abi_ser(json::from_string(std::string{abi.data(), abi.data() + abi.size()}).as<abi_def>(),
                  abi_serializer_max_time) {
+
+      set_code("eosio"_n, contracts::test_bios_wasm());
+      set_abi("eosio"_n, contracts::test_bios_abi().data());
+
       create_account("eosio.assert"_n);
       set_code("eosio.assert"_n, contracts::eosio_assert_wasm());
+      set_abi("eosio.assert"_n, contracts::eosio_assert_abi().data());
    }
 
    struct row {
@@ -504,7 +509,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          "data": {
             "chain_params_hash": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
             "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
-            "actions":           []
+            "actions":           [],
+            "abi_hashes":        []
          },
       }]
    })");
@@ -521,7 +527,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
             "manifest_id":       "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF",
-            "actions":           []
+            "actions":           [],
+            "abi_hashes":        []
          },
       }]
    })");
@@ -538,7 +545,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
             "manifest_id":       "bc9423a3524430a0bf83f9bdaad133b2c874b916fb7129df73d66080713bd49f",
-            "actions":           []
+            "actions":           [],
+            "abi_hashes":        []
          },
       }]
    })");
@@ -558,7 +566,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "contract.1",
                "action":         "just.this"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -578,7 +587,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "contract.2",
                "action":         "foo"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -598,7 +608,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "unknown",
                "action":         "transfer"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -618,7 +629,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "unk.account",
                "action":         "unk.action"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -638,7 +650,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "unk.account",
                "action":         "unk.action"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -658,7 +671,8 @@ BOOST_AUTO_TEST_CASE(require) try {
             "actions":           [{
                "contract":       "bad.token",
                "action":         "transfer"
-            }]
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
       }]
    })");
@@ -666,5 +680,219 @@ BOOST_AUTO_TEST_CASE(require) try {
    t.check_file();
 }
 FC_LOG_AND_RETHROW() // require
+
+BOOST_AUTO_TEST_CASE(require_abi_hash) try {
+   assert_tester t{"require_abi_hash"};
+   t.create_account("wild"_n);
+   t.create_account("user"_n);
+   t.create_account("foo"_n);
+   t.create_account("bar"_n);
+   t.create_account("baz"_n);
+   t.set_abi("foo"_n, contracts::test_foo_abi().data());
+   t.set_abi("bar"_n, contracts::test_bar_abi().data());
+   t.set_abi("baz"_n, contracts::test_baz_abi().data());
+   assert_tester::table manifests{"eosio.assert"_n, "eosio.assert"_n, "manifests"_n, "stored_manifest"};
+   assert_tester::table chain_params{"eosio.assert"_n, "eosio.assert"_n, "chain.params"_n, "stored_chain_params"};
+
+   t.heading("setchain");
+   t.push_transaction("eosio"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "setchain",
+         "authorization": [{
+            "actor":             "eosio",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_id":          "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "chain_name":        "My Mega Sidechain",
+            "icon":              "BEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEFBEEF"
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+
+   t.heading("hash: add.manifest");
+   t.push_transaction("wild"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "add.manifest",
+         "authorization": [{
+            "actor":             "wild",
+            "permission":        "active",
+         }],
+         "data": {
+            "account":           "wild",
+            "name":              "distributed app 1",
+            "domain":            "https://nowhere",
+            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+            "description":       "Something to try",
+            "extra.json":        "",
+            "whitelist":         [{
+               "contract":       "",
+               "action":         ""
+            }],
+            "blacklist":         []
+         },
+      }]
+   })");
+   t.diff_table(chain_params);
+   t.diff_table(manifests);
+
+   t.heading("hash: unknown");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "unk.account",
+               "action":         "unk.action"
+            }],
+            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
+         },
+      }]
+   })");
+
+   t.heading("hash: 1");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "bar",
+               "action":         "unk.action"
+            }],
+            "abi_hashes":        ["79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811"]
+         },
+      }]
+   })");
+
+   t.heading("hash: 3");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "baz",
+               "action":         "unk.action"
+            },{
+               "contract":       "foo",
+               "action":         "unk.action"
+            },{
+               "contract":       "baz",
+               "action":         "another"
+            },{
+               "contract":       "foo",
+               "action":         "whoa"
+            },{
+               "contract":       "bar",
+               "action":         "unk.action"
+            }],
+            "abi_hashes":        [
+                                    "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
+                                    "36fac0455c62cdb66b02541c87668b3922fe3d9bf1758cf0fe290abcc633e1e7",
+                                    "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57",
+                                 ]
+         },
+      }]
+   })");
+
+   t.heading("hash: mismatch");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "baz",
+               "action":         "unk.action"
+            },{
+               "contract":       "foo",
+               "action":         "unk.action"
+            },{
+               "contract":       "baz",
+               "action":         "another"
+            },{
+               "contract":       "foo",
+               "action":         "whoa"
+            },{
+               "contract":       "bar",
+               "action":         "unk.action"
+            }],
+            "abi_hashes":        [
+                                    "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
+                                    "1231231231231231231231231231231231231231231231231231231231231233",
+                                    "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57",
+                                 ]
+         },
+      }]
+   })");
+
+   t.heading("hash: wrong number of hashes");
+   t.push_transaction("user"_n, R"({
+      "actions": [{
+         "account":              "eosio.assert",
+         "name":                 "require",
+         "authorization": [{
+            "actor":             "user",
+            "permission":        "active",
+         }],
+         "data": {
+            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
+            "manifest_id":       "05ea8322c0ce888a6a8f2a5a367045a26ab5a9d412b58cbaf112eda867abeda6",
+            "actions":           [{
+               "contract":       "baz",
+               "action":         "unk.action"
+            },{
+               "contract":       "foo",
+               "action":         "unk.action"
+            },{
+               "contract":       "baz",
+               "action":         "another"
+            },{
+               "contract":       "foo",
+               "action":         "whoa"
+            },{
+               "contract":       "bar",
+               "action":         "unk.action"
+            }],
+            "abi_hashes":        [
+                                    "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
+                                    "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57",
+                                 ]
+         },
+      }]
+   })");
+
+   t.check_file();
+}
+FC_LOG_AND_RETHROW() // require_abi_hash
 
 BOOST_AUTO_TEST_SUITE_END()
