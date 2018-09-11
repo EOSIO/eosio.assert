@@ -11,24 +11,6 @@ using boost::container::flat_set;
 using std::string;
 using std::vector;
 
-/// When deserializing skip the stream's data for T.
-template <typename T>
-struct skip {};
-
-template <typename DataStream>
-DataStream& operator>>(DataStream& ds, skip<checksum256>&) {
-   ds.skip(sizeof(checksum256::hash));
-   return ds;
-}
-
-template <typename DataStream>
-DataStream& operator>>(DataStream& ds, skip<std::string>&) {
-   unsigned_int size;
-   ds >> size;
-   ds.skip(size);
-   return ds;
-}
-
 inline key256 to_key256(const checksum256& cs) {
    key256 result;
    static_assert(sizeof(cs.hash) == sizeof(result.get_array()));
@@ -63,12 +45,9 @@ inline bool operator<(const contract_action& a, const contract_action& b) {
 
 struct manifest {
    name                    account;
-   skip<std::string>       _name;
    std::string             domain;
-   skip<checksum256>       icon;
-   skip<std::string>       extra_json;
+   std::string             appmeta;
    vector<contract_action> whitelist;
-   vector<contract_action> blacklist;
 };
 
 struct stored_manifest {
@@ -76,8 +55,8 @@ struct stored_manifest {
    checksum256               id;
    name                      account;
    std::string               domain;
+   std::string               appmeta;
    flat_set<contract_action> whitelist;
-   flat_set<contract_action> blacklist;
 
    uint64_t primary_key() const { return unique_id; }
    key256   id_key() const { return to_key256(id); }

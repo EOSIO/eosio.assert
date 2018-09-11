@@ -238,12 +238,9 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
          }],
          "data": {
             "account":           "dapp1",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [],
-            "blacklist":         []
          },
       }]
    })");
@@ -259,12 +256,9 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
          }],
          "data": {
             "account":           "dapp1",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [],
-            "blacklist":         []
          },
       }]
    })");
@@ -283,17 +277,14 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
          }],
          "data": {
             "account":           "dapp1",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [],
-            "blacklist":         []
          },
       }]
    })");
 
-   t.heading("add.manifest: white, black");
+   t.heading("add.manifest: whitelist");
    t.produce_block();
    t.push_transaction("dapp1"_n, R"({
       "actions": [{
@@ -305,10 +296,8 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
          }],
          "data": {
             "account":           "dapp1",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [{
                "contract":       "contract.2",
                "action":         ""
@@ -318,13 +307,6 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
             }, {
                "contract":       "contract.3",
                "action":         ""
-            }],
-            "blacklist":         [{
-               "contract":       "contract.3",
-               "action":         "bad"
-            }, {
-               "contract":       "contract.2",
-               "action":         "very.bad"
             }]
          },
       }]
@@ -359,7 +341,7 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
             "permission":        "active",
          }],
          "data": {
-            "id":                "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a",
+            "id":                "50e7051e63420d2912dbbf72e32bc511722057311544d4b3226706354f787433",
          },
       }]
    })");
@@ -376,7 +358,7 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
             "permission":        "active",
          }],
          "data": {
-            "id":                "586f1941742b3c02668226914d801dfb85e916e1454ad7387887a43c1320c58a",
+            "id":                "50e7051e63420d2912dbbf72e32bc511722057311544d4b3226706354f787433",
          },
       }]
    })");
@@ -393,7 +375,7 @@ BOOST_AUTO_TEST_CASE(add_manifest) try {
             "permission":        "active",
          }],
          "data": {
-            "id":                "1edd77ab2fed6568fc61da5b30c9f4654a5a9822907989a10948d4ad2d6524fe",
+            "id":                "49b4217257a723b59bbe6ff46e2d504734e3c4a5233938a4a843ed2bce380e2a",
          },
       }]
    })");
@@ -441,10 +423,8 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "account":           "dapp1",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [{
                "contract":       "contract.2",
                "action":         ""
@@ -453,10 +433,6 @@ BOOST_AUTO_TEST_CASE(require) try {
                "action":         "just.this"
             }, {
                "contract":       "",
-               "action":         "transfer"
-            }],
-            "blacklist":         [{
-               "contract":       "bad.token",
                "action":         "transfer"
             }]
          },
@@ -476,15 +452,12 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "account":           "wild",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [{
                "contract":       "",
                "action":         ""
             }],
-            "blacklist":         []
          },
       }]
    })");
@@ -538,7 +511,7 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+            "manifest_id":       "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
             "actions":           [],
             "abi_hashes":        []
          },
@@ -556,7 +529,7 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+            "manifest_id":       "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
             "actions":           [{
                "contract":       "contract.1",
                "action":         "just.this"
@@ -577,7 +550,7 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+            "manifest_id":       "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
             "actions":           [{
                "contract":       "contract.2",
                "action":         "foo"
@@ -598,7 +571,7 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+            "manifest_id":       "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
             "actions":           [{
                "contract":       "unknown",
                "action":         "transfer"
@@ -619,7 +592,7 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "unk.account",
                "action":         "unk.action"
@@ -640,31 +613,10 @@ BOOST_AUTO_TEST_CASE(require) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+            "manifest_id":       "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
             "actions":           [{
                "contract":       "unk.account",
                "action":         "unk.action"
-            }],
-            "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
-         },
-      }]
-   })");
-
-   t.heading("require: in blacklist");
-   t.push_transaction("user"_n, R"({
-      "actions": [{
-         "account":              "eosio.assert",
-         "name":                 "require",
-         "authorization": [{
-            "actor":             "user",
-            "permission":        "active",
-         }],
-         "data": {
-            "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
-            "actions":           [{
-               "contract":       "bad.token",
-               "action":         "transfer"
             }],
             "abi_hashes":        ["0000000000000000000000000000000000000000000000000000000000000000"]
          },
@@ -717,15 +669,12 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "account":           "wild",
-            "name":              "distributed app 1",
+            "appmeta":           "distributed app 1",
             "domain":            "https://nowhere",
-            "icon":              "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-            "extra.json":        "",
             "whitelist":         [{
                "contract":       "",
                "action":         ""
             }],
-            "blacklist":         []
          },
       }]
    })");
@@ -743,7 +692,7 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "unk.account",
                "action":         "unk.action"
@@ -764,7 +713,7 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "bar",
                "action":         "unk.action"
@@ -785,7 +734,7 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "baz",
                "action":         "unk.action"
@@ -822,7 +771,7 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "baz",
                "action":         "unk.action"
@@ -859,7 +808,7 @@ BOOST_AUTO_TEST_CASE(require_abi_hash) try {
          }],
          "data": {
             "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-            "manifest_id":       "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+            "manifest_id":       "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
             "actions":           [{
                "contract":       "baz",
                "action":         "unk.action"

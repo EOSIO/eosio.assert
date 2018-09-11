@@ -46,8 +46,8 @@ struct asserter {
           .id        = hash,
           .account   = unpacked.account,
           .domain    = unpacked.domain,
+          .appmeta   = unpacked.appmeta,
           .whitelist = {unpacked.whitelist.begin(), unpacked.whitelist.end()},
-          .blacklist = {unpacked.blacklist.begin(), unpacked.blacklist.end()},
       };
       require_auth(stored.account);
       auto it = manifest_id_idx.find(stored.id_key());
@@ -95,9 +95,6 @@ struct asserter {
             eosio_assert(
                 false,
                 (action.action.to_string() + "@" + action.contract.to_string() + " is not in whitelist").c_str());
-         if (in(action, it->blacklist))
-            eosio_assert(false,
-                         (action.action.to_string() + "@" + action.contract.to_string() + " is in blacklist").c_str());
       }
       abi_hash_table table{"eosio"_n, "eosio"_n};
       eosio_assert(abi_hashes.size() == contracts.size(), "incorrect number of abi hashes");

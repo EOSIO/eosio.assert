@@ -68,27 +68,15 @@
                "type": "name"
             },
             {
-               "name": "name",
-               "type": "string"
-            },
-            {
                "name": "domain",
                "type": "string"
             },
             {
-               "name": "icon",
-               "type": "checksum256"
-            },
-            {
-               "name": "extra.json",
+               "name": "appmeta",
                "type": "string"
             },
             {
                "name": "whitelist",
-               "type": "contract_action[]"
-            },
-            {
-               "name": "blacklist",
                "type": "contract_action[]"
             }
          ]
@@ -114,11 +102,11 @@
                "type": "string"
             },
             {
-               "name": "whitelist",
-               "type": "contract_action[]"
+               "name": "appmeta",
+               "type": "string"
             },
             {
-               "name": "blacklist",
+               "name": "whitelist",
                "type": "contract_action[]"
             }
          ]
@@ -178,7 +166,30 @@
          "ricardian_contract": ""
       }
    ],
-   "tables": [],
+   "tables": [
+      {
+         "name": "chain.params",
+         "type": "stored_chain_params",
+         "index_type": "i64",
+         "key_names": [
+            "key"
+         ],
+         "key_types": [
+            "uint64"
+         ]
+      },
+      {
+         "name": "manifests",
+         "type": "stored_manifest",
+         "index_type": "i64",
+         "key_names": [
+            "key"
+         ],
+         "key_types": [
+            "uint64"
+         ]
+      }
+   ],
    "ricardian_clauses": [],
    "abi_extensions": []
 }

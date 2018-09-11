@@ -42,10 +42,8 @@ push_transaction {
       ],
       "data": {
         "account": "dapp1",
-        "name": "distributed app 1",
+        "appmeta": "distributed app 1",
         "domain": "https://nowhere",
-        "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "extra.json": "",
         "whitelist": [{
             "contract": "contract.2",
             "action": ""
@@ -54,11 +52,6 @@ push_transaction {
             "action": "just.this"
           },{
             "contract": "",
-            "action": "transfer"
-          }
-        ],
-        "blacklist": [{
-            "contract": "bad.token",
             "action": "transfer"
           }
         ]
@@ -80,9 +73,10 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 1,
-          "id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+          "id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
           "account": "dapp1",
           "domain": "https://nowhere",
+          "appmeta": "distributed app 1",
           "whitelist": [{
               "contract": "",
               "action": "transfer"
@@ -92,11 +86,6 @@ table: eosio.assert eosio.assert manifests
             },{
               "contract": "contract.2",
               "action": ""
-            }
-          ],
-          "blacklist": [{
-              "contract": "bad.token",
-              "action": "transfer"
             }
           ]
         }
@@ -114,16 +103,13 @@ push_transaction {
       ],
       "data": {
         "account": "wild",
-        "name": "distributed app 1",
+        "appmeta": "distributed app 1",
         "domain": "https://nowhere",
-        "icon": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
-        "extra.json": "",
         "whitelist": [{
             "contract": "",
             "action": ""
           }
-        ],
-        "blacklist": []
+        ]
       }
     }
   ]
@@ -142,15 +128,15 @@ table: eosio.assert eosio.assert manifests
     add row:
         {
           "unique_id": 2,
-          "id": "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+          "id": "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
           "account": "wild",
           "domain": "https://nowhere",
+          "appmeta": "distributed app 1",
           "whitelist": [{
               "contract": "",
               "action": ""
             }
-          ],
-          "blacklist": []
+          ]
         }
 
 require: wrong chain
@@ -210,7 +196,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+        "manifest_id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
         "actions": [],
         "abi_hashes": []
       }
@@ -232,7 +218,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+        "manifest_id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
         "actions": [{
             "contract": "contract.1",
             "action": "just.this"
@@ -260,7 +246,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+        "manifest_id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
         "actions": [{
             "contract": "contract.2",
             "action": "foo"
@@ -288,7 +274,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+        "manifest_id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
         "actions": [{
             "contract": "unknown",
             "action": "transfer"
@@ -316,7 +302,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "ec04debd8e4c158f29cdf8258b00d34ef7b9b9b57401063d9723d2e66bbf1ffe",
+        "manifest_id": "4fc817b2e2d537b4a7311df3faeaafcbdfe35b25b19269e89da818a06a4a2997",
         "actions": [{
             "contract": "unk.account",
             "action": "unk.action"
@@ -344,7 +330,7 @@ push_transaction {
       ],
       "data": {
         "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
+        "manifest_id": "c9bfa4363ea2c08df2bb41f5393fec96b323a399cd57783f2c0535f66326e3d2",
         "actions": [{
             "contract": "unk.account",
             "action": "unk.action"
@@ -358,31 +344,3 @@ push_transaction {
   ]
 }
 Exception: assertion failure with message: unk.action@unk.account is not in whitelist
-
-require: in blacklist
-=========================
-push_transaction {
-  "actions": [{
-      "account": "eosio.assert",
-      "name": "require",
-      "authorization": [{
-          "actor": "user",
-          "permission": "active"
-        }
-      ],
-      "data": {
-        "chain_params_hash": "a5e2578a54c35885716a63d70d4b51b227d8aa47ad9a3163c733b79160bb513c",
-        "manifest_id": "e046865f02c1f7129e4e62c1960f4645d5cf1ac25a5350c84940540d7ce1d4f1",
-        "actions": [{
-            "contract": "bad.token",
-            "action": "transfer"
-          }
-        ],
-        "abi_hashes": [
-          "0000000000000000000000000000000000000000000000000000000000000000"
-        ]
-      }
-    }
-  ]
-}
-Exception: assertion failure with message: transfer@bad.token is in blacklist
