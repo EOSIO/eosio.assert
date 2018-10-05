@@ -126,7 +126,7 @@ push_transaction {
           }
         ],
         "abi_hashes": [
-          "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811"
+          "d6878c7fc285a65df6cf02cad9e11532321e6c5a3dc48f6f9fd150bc1b90c378"
         ]
       }
     }
@@ -166,9 +166,9 @@ push_transaction {
           }
         ],
         "abi_hashes": [
-          "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
-          "36fac0455c62cdb66b02541c87668b3922fe3d9bf1758cf0fe290abcc633e1e7",
-          "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57"
+          "d6878c7fc285a65df6cf02cad9e11532321e6c5a3dc48f6f9fd150bc1b90c378",
+          "58e2dec1abd4dcbf8121736b39b07f5db4a1dd29025c44023c7a37d305e40b14",
+          "b82da7015d860512403b6fec2188ffb8b1803d07df654bb79986465f2d5895c6"
         ]
       }
     }
@@ -208,15 +208,15 @@ push_transaction {
           }
         ],
         "abi_hashes": [
-          "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
+          "d6878c7fc285a65df6cf02cad9e11532321e6c5a3dc48f6f9fd150bc1b90c378",
           "1231231231231231231231231231231231231231231231231231231231231233",
-          "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57"
+          "b82da7015d860512403b6fec2188ffb8b1803d07df654bb79986465f2d5895c6"
         ]
       }
     }
   ]
 }
-Exception: assertion failure with message: baz abi hash is 36fac0455c62cdb66b02541c87668b3922fe3d9bf1758cf0fe290abcc633e1e7 but user expected 1231231231231231231231231231231231231231231231231231231231231233
+Exception: assertion failure with message: baz abi hash is 58e2dec1abd4dcbf8121736b39b07f5db4a1dd29025c44023c7a37d305e40b14 but user expected 1231231231231231231231231231231231231231231231231231231231231233
 
 hash: wrong number of hashes
 =========================
@@ -250,8 +250,8 @@ push_transaction {
           }
         ],
         "abi_hashes": [
-          "79d00c3bc0ffbb3c59dbb664c2e2c6bc04c22366c5d1ef798be876e740643811",
-          "4ef9a70e2308bc3c831e82a3b86c9ed696504d53e2453f022a5f4e2e89ddea57"
+          "d6878c7fc285a65df6cf02cad9e11532321e6c5a3dc48f6f9fd150bc1b90c378",
+          "b82da7015d860512403b6fec2188ffb8b1803d07df654bb79986465f2d5895c6"
         ]
       }
     }
