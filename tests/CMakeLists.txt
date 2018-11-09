@@ -1,7 +1,6 @@
 cmake_minimum_required( VERSION 3.5 )
 
-list(APPEND CMAKE_MODULE_PATH ${EOSIO_ROOT}/lib/cmake)
-include(EosioTester)
+find_package(eosio)
 
 ### check the version of EOSIO
 string(FIND "${EOSIO_VERSION}" "${EOSIO_DEPENDENCY}" output)

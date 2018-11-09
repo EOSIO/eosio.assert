@@ -1,7 +1,11 @@
 BasedOnStyle: LLVM
-IndentWidth: 3
-ColumnLimit: 120
-PointerAlignment: Left
-AlwaysBreakTemplateDeclarations: true
-AlignConsecutiveDeclarations: true
+
+AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AllowShortCaseLabelsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: 120
+IndentWidth: 3
+PointerAlignment: Left

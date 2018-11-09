@@ -1,6 +1,6 @@
 Dependencies:
-* [eosio v1.3.x](https://github.com/EOSIO/eos/releases/tag/v1.3.1)
-* [eosio.cdt v1.2.x](https://github.com/EOSIO/eosio.cdt/releases/tag/v1.2.1)
+* [eosio v1.3.x](https://github.com/EOSIO/eos/releases/tag/v1.3.2)
+* [eosio.cdt v1.3.x](https://github.com/EOSIO/eosio.cdt/releases/tag/v1.4.0)
 
 To build the contracts and the unit tests:
 * First, ensure that your __eosio__ is compiled to the core symbol for the EOSIO blockchain that intend to deploy to.
