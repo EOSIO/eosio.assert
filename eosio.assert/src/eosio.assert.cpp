@@ -59,11 +59,11 @@ struct[[eosio::contract("eosio.assert")]] asserter : eosio::contract {
       manifest_id_idx.erase(it);
    };
 
-   bool in(contract_action action, const std::set<contract_action>& actions) {
-      return actions.find(action) != actions.end() || //
-             actions.find({action.contract, name{0}}) != actions.end() ||
-             actions.find({name{0}, action.action}) != actions.end() ||
-             actions.find({name{0}, name{0}}) != actions.end();
+   bool in(contract_action action, const std::vector<contract_action>& actions) {
+      return std::find(actions.begin(), actions.end(), action) != actions.end() || //
+             std::find(actions.begin(), actions.end(), contract_action{action.contract, name{0}}) != actions.end() ||
+             std::find(actions.begin(), actions.end(), contract_action{name{0}, action.action}) != actions.end() ||
+             std::find(actions.begin(), actions.end(), contract_action{name{0}, name{0}}) != actions.end();
    }
 
    static std::string hash_to_str(const checksum256& hash) {

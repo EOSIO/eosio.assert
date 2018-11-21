@@ -133,11 +133,11 @@ table: eosio.assert eosio.assert manifests
           "domain": "https://nowhere",
           "appmeta": "distributed app 1",
           "whitelist": [{
-              "contract": "contract.1",
-              "action": "just.this"
-            },{
               "contract": "contract.2",
               "action": ""
+            },{
+              "contract": "contract.1",
+              "action": "just.this"
             },{
               "contract": "contract.3",
               "action": ""
@@ -215,11 +215,11 @@ table: eosio.assert eosio.assert manifests
           "domain": "https://nowhere",
           "appmeta": "distributed app 1",
           "whitelist": [{
-              "contract": "contract.1",
-              "action": "just.this"
-            },{
               "contract": "contract.2",
               "action": ""
+            },{
+              "contract": "contract.1",
+              "action": "just.this"
             },{
               "contract": "contract.3",
               "action": ""

@@ -25,17 +25,17 @@ struct contract_action {
    name action;
 };
 
-inline bool operator<(const contract_action& a, const contract_action& b) {
-   return std::tie(a.contract, a.action) < std::tie(b.contract, b.action);
+inline bool operator==(const contract_action& a, const contract_action& b) {
+   return std::tie(a.contract, a.action) == std::tie(b.contract, b.action);
 }
 
 struct [[ eosio::contract("eosio.assert"), eosio::table("manifests") ]] stored_manifest {
-   uint64_t                  unique_id = 0;
-   checksum256               id;
-   name                      account;
-   std::string               domain;
-   std::string               appmeta;
-   std::set<contract_action> whitelist;
+   uint64_t                     unique_id = 0;
+   checksum256                  id;
+   name                         account;
+   std::string                  domain;
+   std::string                  appmeta;
+   std::vector<contract_action> whitelist;
 
    uint64_t    primary_key() const { return unique_id; }
    checksum256 id_key() const { return id; }
