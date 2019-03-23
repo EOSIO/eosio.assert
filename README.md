@@ -29,17 +29,27 @@ The sequence diagrams in this section describe how and in what order different a
 
 ### eosio.assert::set.chain
 
+<img src=".images/setchain.png" alt="Set Chain" width="1400">
+
 Block Producers set chain info for Trusted Blockchain Network
 
 ### eosio.assert::add.manifest
+
+
+<img src=".images/addmanifest.png" alt="Add Manifest" width="1400">
 
 Blockchain App publishes manifest to the chain
 
 ### eosio.assert::del.manifest
 
+
+<img src=".images/delmanifest.png" alt="Del Manifest" width="1400">
 Blockchain App removes a manifest from the chain
 
 ### eosio.assert::require
+
+
+<img src=".images/require.png" alt="require" width="1400">
 
 - End User perform an interaction on the Blockchain App that requires signing
 - Blockchain App builds eosio.assert::require action, which includes the following:
