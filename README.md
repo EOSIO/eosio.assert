@@ -131,7 +131,7 @@ Allows a Blockchain Application to remove a previously published app manifest fr
 #### Parameters
 - id: checksum256 id of the manifest. This id was generated upon adding the manifest 
 #### Result
-- The manifest is deleted |
+- The manifest is deleted 
 
 ## eosio.assert::require
 When added to a transaction, ‘require’ action performs multiple security checks. If any of the checks fails, the transactions fails.
@@ -153,7 +153,7 @@ When added to a transaction, ‘require’ action performs multiple security che
   - manifest_id exists 
   - The manifest identified by manifest_id whitelists all the provided actions. See parameter ‘actions’ above. 
   - Contracts have matching ABI hashes 
-  - If any of the checks fails, then the transaction will fail.|
+  - If any of the checks fails, then the transaction will fail.
 
 
 
