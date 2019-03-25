@@ -65,7 +65,7 @@ class assert_tester : public TESTER {
    }
 
    assert_tester(const std::string& test_name)
-       : TESTER(), test_name{test_name}, outfile{DATA_DIR + test_name + ".actual"}, abi{contracts::eosio_assert_abi()},
+       : TESTER(), test_name{test_name}, outfile{ASSERT_DATA_DIR + test_name + ".actual"}, abi{contracts::eosio_assert_abi()},
          abi_ser(json::from_string(std::string{abi.data(), abi.data() + abi.size()}).as<abi_def>(),
                  abi_serializer_max_time) {
 
@@ -142,10 +142,10 @@ class assert_tester : public TESTER {
       outfile.close();
       if (write_mode)
          BOOST_REQUIRE_EQUAL(
-             0, system(("cp " DATA_DIR + test_name + ".actual " DATA_DIR + test_name + ".expected").c_str()));
+             0, system(("cp " ASSERT_DATA_DIR + test_name + ".actual " ASSERT_DATA_DIR + test_name + ".expected").c_str()));
       else
          BOOST_REQUIRE_EQUAL(
-             0, system(("colordiff " DATA_DIR + test_name + ".expected " DATA_DIR + test_name + ".actual").c_str()));
+             0, system(("colordiff " ASSERT_DATA_DIR + test_name + ".expected " ASSERT_DATA_DIR + test_name + ".actual").c_str()));
    }
 
    std::string           test_name;

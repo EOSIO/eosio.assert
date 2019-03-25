@@ -1,12 +1,26 @@
 cmake_minimum_required( VERSION 3.5 )
 
+set(EOSIO_VERSION_MIN "1.7")
+set(EOSIO_VERSION_SOFT_MAX "1.7")
+#set(EOSIO_VERSION_HARD_MAX "")
+
 find_package(eosio)
 
-### check the version of EOSIO
-string(FIND "${EOSIO_VERSION}" "${EOSIO_DEPENDENCY}" output)
-if (NOT "${output}" EQUAL 0)
-   message(FATAL_ERROR "Incorrect EOSIO version, please use version ${EOSIO_DEPENDENCY}.x")
-endif()
+### Check the version of eosio
+set(VERSION_MATCH_ERROR_MSG "")
+EOSIO_CHECK_VERSION(VERSION_OUTPUT "${EOSIO_VERSION}"
+                                   "${EOSIO_VERSION_MIN}"
+                                   "${EOSIO_VERSION_SOFT_MAX}"
+                                   "${EOSIO_VERSION_HARD_MAX}"
+                                   VERSION_MATCH_ERROR_MSG)
+if(VERSION_OUTPUT STREQUAL "MATCH")
+   message(STATUS "Using eosio version ${EOSIO_VERSION}")
+elseif(VERSION_OUTPUT STREQUAL "WARN")
+   message(WARNING "Using eosio version ${EOSIO_VERSION} even though it exceeds the maximum supported version of ${EOSIO_VERSION_SOFT_MAX}; continuing with configuration, however build may fail.\nIt is recommended to use eosio version ${EOSIO_VERSION_SOFT_MAX}.x")
+else() # INVALID OR MISMATCH
+   message(FATAL_ERROR "Found eosio version ${EOSIO_VERSION} but it does not satisfy version requirements: ${VERSION_MATCH_ERROR_MSG}\nPlease use eosio version ${EOSIO_VERSION_SOFT_MAX}.x")
+endif(VERSION_OUTPUT STREQUAL "MATCH")
+
 
 enable_testing()
 
@@ -18,4 +32,4 @@ file(GLOB UNIT_TESTS "*.cpp" "*.hpp")
 
 add_eosio_test( unit_test ${UNIT_TESTS} )
 
-target_compile_options(unit_test PUBLIC -ftemplate-backtrace-limit=0 -DDATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data/")
+target_compile_options(unit_test PUBLIC -DASSERT_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data/")

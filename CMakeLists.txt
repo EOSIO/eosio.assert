@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(eosio.assert VERSION 0.0.0)
 
-set(EOSIO_CDT_VERSION_MIN "1.4")
-set(EOSIO_CDT_VERSION_SOFT_MAX "1.4")
+set(EOSIO_CDT_VERSION_MIN "1.6")
+set(EOSIO_CDT_VERSION_SOFT_MAX "1.6")
 #set(EOSIO_CDT_VERSION_HARD_MAX "")
-
-include(CheckVersion.txt)
 
 find_package(eosio.cdt)
 
@@ -31,7 +29,6 @@ else()
    set(TEST_BUILD_TYPE ${CMAKE_BUILD_TYPE})
 endif()
 
-include_directories(AFTER ${BOOST_ROOT}/include)
 add_subdirectory(eosio.assert)
 
 if (APPLE)
