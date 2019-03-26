@@ -120,7 +120,7 @@ Allows a Blockchain Application to publish an app manifest to the Trusted Blockc
 
 #### Parameters
 - account: the account which owns the app
-- domain: the domain the app is hosted on, appmeta: see the manifest spec at [https://github.com/EOSIO/manifest-specification](https://github.com/EOSIO/manifest-specification)
+- domain: the domain the app is hosted on, appmeta: see the manifest spec at [https://github.com/EOSIO/manifest-spec](https://github.com/EOSIO/manifest-spec)
 - whitelist: array of (contract, action) pairs that the manifest allows. An empty contract or action indicates a wildcard match. e.g. an empty action name means all actions are allowed for that contract.
 
 #### Result
