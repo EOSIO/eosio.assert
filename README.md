@@ -1,17 +1,17 @@
+# EOSIO Assert Contract
 
-![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
-
-# About EOSIO Labs
-
-EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
-
-# Introduction to eosio.assert
 The EOSIO Assert Contract is a security feature to reduce the need for users to trust blockchain apps when a user signs a transaction for a trusted blockchain network with a trusted wallet application. It is a solution aiming to:
 
 - Allow blockchain networks to register the official chain name and chain icon
 - Allow app developers to register one or more manifests describing their application, and 
 - Allow app developers to remove previously registered manifests
 - Allow users (via some user-agent) to include a “require” action in a transaction that will ensure that the entire transaction is rejected if the required pre-conditions are not valid.
+
+![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
+
+# About EOSIO Labs
+
+EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
 
 #  Feature Overview
 Assert will be a system contract within the EOSIO software.
