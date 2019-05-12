@@ -1,13 +1,13 @@
 # EOSIO Assert Contract
 
+![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
+
 The EOSIO Assert Contract is a security feature to reduce the need for users to trust blockchain apps when a user signs a transaction for a trusted blockchain network with a trusted wallet application. It is a solution aiming to:
 
 - Allow blockchain networks to register the official chain name and chain icon
 - Allow app developers to register one or more manifests describing their application, and 
 - Allow app developers to remove previously registered manifests
 - Allow users (via some user-agent) to include a “require” action in a transaction that will ensure that the entire transaction is rejected if the required pre-conditions are not valid.
-
-![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
 # About EOSIO Labs
 
