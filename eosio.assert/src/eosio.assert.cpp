@@ -23,7 +23,7 @@ struct[[eosio::contract("eosio.assert")]] asserter : eosio::contract {
    stored_chain_params chain = chain_table.get_or_default();
 
    [[eosio::action]] void setchain(ignore<checksum256> chain_id, ignore<string> chain_name, ignore<checksum256> icon) {
-      require_auth("eosio"_n);
+      require_auth(get_self());
       auto hash = eosio::sha256(_ds.pos(), _ds.remaining());
       _ds >> chain.chain_id;
       _ds >> chain.chain_name;
